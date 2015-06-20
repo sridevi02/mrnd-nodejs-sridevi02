@@ -1,9 +1,9 @@
-
+var idCreated;
 describe("Contacts Test Suite", function(){
 
 	//var request = require('request');
 	var request = require('C:/Program Files/nodejs/node_modules/npm/node_modules/request')
-	var base_url = "http://mycontactsvc.com:3000";
+	var base_url = "http://localhost:3000";
 	var contacts_url = base_url + "/contacts";
 
 	describe("hello world", function(){
@@ -22,7 +22,7 @@ describe("Contacts Test Suite", function(){
 	});
 
 	describe("create update contact", function(){
-		var idCreated;
+		//var idCreated;
 
 		it("should create contact",function(done){
 
@@ -86,31 +86,19 @@ describe("Contacts Test Suite", function(){
 
 		it("should post message to contact", function(done){
 			//TODO: Write your test case here.
-			request.get({
-							url: contacts_url + "/" + idCreated,
-							json: true
-						},
-		    		    function(error, response, body){
-
-						body.message = "hello....";
-						contact=body;
-
-			var updatedContact = new Object();
-			updatedContact.message = "hello.....";
+			var mess="hello....";
+			
 			request.put({
-							url: contacts_url + "/" + idCreated,
-							body: updatedContact,
+							url: contacts_url + "/" + idCreated + "/" + mess,
 							json: true
 						},
-		    		    function(error, response, body){
-
+						function(error,response,body){
 							expect(response.statusCode).toBe(200);
-							console.log(body);
-							expect(body.message).toBe("hello....");
-							expect(body.phone).toBe("23002300");
+							expect(body.mess).toBe("hello....");
 							done();
 					    });
-		});
+				});
+
 		it("should get message for contact", function(done){
 			//TODO: Write your test case here.
 			request.get({
@@ -121,7 +109,7 @@ describe("Contacts Test Suite", function(){
 
 						expect(response.statusCode).toBe(200);
 							console.log(body);
-						expect(body.firstName).toBe("jagan");
+						expect(body.mess).toBe("hello....");
 							done();
 					    });
 		});
