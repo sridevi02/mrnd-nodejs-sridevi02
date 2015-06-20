@@ -86,14 +86,44 @@ describe("Contacts Test Suite", function(){
 
 		it("should post message to contact", function(done){
 			//TODO: Write your test case here.
-			done();
+			request.get({
+							url: contacts_url + "/" + idCreated,
+							json: true
+						},
+		    		    function(error, response, body){
 
+						body.message = "hello....";
+						contact=body;
+
+			var updatedContact = new Object();
+			updatedContact.message = "hello.....";
+			request.put({
+							url: contacts_url + "/" + idCreated,
+							body: updatedContact,
+							json: true
+						},
+		    		    function(error, response, body){
+
+							expect(response.statusCode).toBe(200);
+							console.log(body);
+							expect(body.message).toBe("hello....");
+							expect(body.phone).toBe("23002300");
+							done();
+					    });
 		});
-
 		it("should get message for contact", function(done){
 			//TODO: Write your test case here.
-			done();
+			request.get({
+							url: contacts_url + "/" + idCreated,
+							json: true
+						},
+		    		    function(error, response, body){
 
+						expect(response.statusCode).toBe(200);
+							console.log(body);
+						expect(body.firstName).toBe("jagan");
+							done();
+					    });
 		});
 
 	});
